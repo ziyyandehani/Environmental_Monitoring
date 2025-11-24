@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Navigate to the infra directory and start the services using Docker Compose
-cd ../infra
+cd infra
 docker-compose up -d
 
 # Navigate back to the scripts directory

@@ -1,0 +1,25 @@
+{
+  "name": "ingest-server",
+  "version": "1.0.0",
+  "description": "Ingest server for processing sensor data from MQTT broker.",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "build": "tsc",
+    "test": "jest"
+  },
+  "dependencies": {
+    "mqtt": "^4.3.7",
+    "csv-writer": "^1.6.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.4",
+    "ts-node": "^10.4.0",
+    "jest": "^27.0.6",
+    "@types/jest": "^27.0.2",
+    "@types/express": "^4.17.13"
+  },
+  "author": "",
+  "license": "ISC"
+}

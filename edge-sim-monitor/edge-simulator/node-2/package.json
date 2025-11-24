@@ -1,0 +1,21 @@
+{
+  "name": "edge-simulator-node-2",
+  "version": "1.0.0",
+  "description": "Sensor node 2 for edge computing environmental monitoring.",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "mqtt": "^4.3.7",
+    "typescript": "^4.5.4",
+    "ts-node": "^10.4.0"
+  },
+  "devDependencies": {
+    "@types/mqtt": "^4.2.1",
+    "@types/node": "^16.11.7"
+  },
+  "author": "Your Name",
+  "license": "MIT"
+}

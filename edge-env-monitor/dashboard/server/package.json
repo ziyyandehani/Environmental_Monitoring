@@ -1,0 +1,23 @@
+{
+  "name": "edge-env-monitor-dashboard-server",
+  "version": "1.0.0",
+  "description": "Server for the environmental monitoring dashboard",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "build": "tsc",
+    "test": "jest"
+  },
+  "dependencies": {
+    "ws": "^8.5.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.4",
+    "ts-node": "^10.4.0",
+    "jest": "^27.0.6",
+    "@types/jest": "^27.0.2",
+    "@types/ws": "^8.5.0"
+  },
+  "author": "Your Name",
+  "license": "MIT"
+}
