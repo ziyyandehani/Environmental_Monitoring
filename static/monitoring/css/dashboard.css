@@ -1,0 +1,247 @@
+/* Dashboard Custom Styles */
+
+:root {
+    --primary-color: #2c3e50;
+    --success-color: #27ae60;
+    --warning-color: #f39c12;
+    --danger-color: #e74c3c;
+    --info-color: #3498db;
+    --light-color: #ecf0f1;
+    --dark-color: #34495e;
+}
+
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Sensor Cards */
+.sensor-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.sensor-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.sensor-card[data-sensor="temperature"] {
+    border-left: 4px solid #e74c3c;
+}
+
+.sensor-card[data-sensor="humidity"] {
+    border-left: 4px solid #3498db;
+}
+
+.sensor-card[data-sensor="light"] {
+    border-left: 4px solid #f39c12;
+}
+
+.sensor-card[data-sensor="co2"] {
+    border-left: 4px solid #95a5a6;
+}
+
+.sensor-icon {
+    font-size: 2rem;
+    opacity: 0.7;
+    color: var(--primary-color);
+}
+
+/* Status Badges */
+.badge.status-normal {
+    background-color: var(--success-color);
+}
+
+.badge.status-warning {
+    background-color: var(--warning-color);
+}
+
+.badge.status-danger {
+    background-color: var(--danger-color);
+}
+
+.badge.status-unknown {
+    background-color: var(--dark-color);
+}
+
+/* Connection Status */
+#connection-status {
+    font-size: 0.8rem;
+    margin-right: 0.5rem;
+}
+
+#connection-status.connected {
+    color: var(--success-color);
+}
+
+#connection-status.disconnected {
+    color: var(--danger-color);
+}
+
+#connection-status.connecting {
+    color: var(--warning-color);
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+/* Device Status Badge */
+#device-status-badge.bg-success {
+    background-color: var(--success-color) !important;
+}
+
+#device-status-badge.bg-warning {
+    background-color: var(--warning-color) !important;
+}
+
+#device-status-badge.bg-danger {
+    background-color: var(--danger-color) !important;
+}
+
+#device-status-badge.bg-secondary {
+    background-color: var(--dark-color) !important;
+}
+
+/* Charts */
+.chart-container {
+    position: relative;
+    height: 400px;
+}
+
+/* Event List */
+.event-item {
+    border-left: 4px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.event-item.level-low {
+    border-left-color: var(--info-color);
+}
+
+.event-item.level-medium {
+    border-left-color: var(--warning-color);
+}
+
+.event-item.level-high {
+    border-left-color: var(--danger-color);
+}
+
+.event-item.level-critical {
+    border-left-color: #8b0000;
+    background-color: #fff5f5;
+}
+
+.event-item:hover {
+    background-color: #f8f9fa;
+}
+
+.event-time {
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+/* Command History */
+.command-item {
+    transition: all 0.3s ease;
+}
+
+.command-item:hover {
+    background-color: #f8f9fa;
+}
+
+.command-status {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+}
+
+.command-status.status-pending {
+    background-color: var(--warning-color);
+}
+
+.command-status.status-sent {
+    background-color: var(--info-color);
+}
+
+.command-status.status-executed {
+    background-color: var(--success-color);
+}
+
+.command-status.status-failed {
+    background-color: var(--danger-color);
+}
+
+/* Control Panel */
+.btn-block {
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sensor-card {
+        margin-bottom: 1rem;
+    }
+    
+    .chart-container {
+        height: 300px;
+    }
+    
+    #events-list,
+    #commands-list {
+        max-height: 250px !important;
+    }
+}
+
+/* Loading Animation */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Toast Styling */
+.toast {
+    min-width: 300px;
+}
+
+.toast.show {
+    opacity: 1;
+}
+
+/* Card Headers */
+.card-header {
+    background-color: rgba(0, 0, 0, 0.03);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+/* Button Groups */
+.btn-group .btn {
+    border-radius: 0.375rem;
+}
+
+.btn-group .btn.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Utility Classes */
+.text-sensor-temp { color: #e74c3c; }
+.text-sensor-humidity { color: #3498db; }
+.text-sensor-light { color: #f39c12; }
+.text-sensor-co2 { color: #95a5a6; }

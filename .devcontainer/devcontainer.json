@@ -1,0 +1,59 @@
+{
+    "name": "Environmental Monitoring Dev Container",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "django",
+    "workspaceFolder": "/app",
+    
+    "features": {
+        "ghcr.io/devcontainers/features/python:1": {
+            "version": "3.11"
+        },
+        "ghcr.io/devcontainers/features/node:1": {
+            "version": "18"
+        },
+        "ghcr.io/devcontainers/features/git:1": {}
+    },
+
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.pylint",
+                "ms-python.black-formatter",
+                "ms-vscode.vscode-json",
+                "ms-azuretools.vscode-docker",
+                "bradlc.vscode-tailwindcss",
+                "esbenp.prettier-vscode"
+            ],
+            "settings": {
+                "python.defaultInterpreterPath": "/usr/local/bin/python",
+                "python.formatting.provider": "black",
+                "python.linting.enabled": true,
+                "python.linting.pylintEnabled": true,
+                "terminal.integrated.defaultProfile.linux": "bash"
+            }
+        }
+    },
+
+    "forwardPorts": [8000, 5432, 1883, 9001],
+    "portsAttributes": {
+        "8000": {
+            "label": "Django App",
+            "onAutoForward": "openPreview"
+        },
+        "5432": {
+            "label": "PostgreSQL"
+        },
+        "1883": {
+            "label": "MQTT Broker"
+        },
+        "9001": {
+            "label": "MQTT WebSocket"
+        }
+    },
+
+    "postCreateCommand": "pip install -r requirements.txt",
+    "postStartCommand": "python manage.py migrate",
+
+    "remoteUser": "root"
+}

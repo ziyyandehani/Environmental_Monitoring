@@ -1,6 +1,0 @@
-Flask==2.0.3
-Werkzeug==2.0.3
-paho-mqtt==1.6.1
-SQLAlchemy==1.4.22
-pytest==6.2.4
-requests==2.26.0

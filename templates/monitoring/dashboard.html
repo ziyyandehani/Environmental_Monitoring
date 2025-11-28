@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Environmental Monitoring Dashboard</title>
+    {% load static %}
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@2.29.3/index.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@2.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'monitoring/css/dashboard.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-leaf me-2"></i>Environmental Monitor
+            </a>
+            <div class="navbar-nav ms-auto">
+                <span class="navbar-text">
+                    <i class="fas fa-circle" id="connection-status"></i>
+                    <span id="connection-text">Connecting...</span>
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-4">
+        <!-- Device Status Card -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="fas fa-microchip me-2"></i>Device Status
+                        </h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Device:</strong> edge01</p>
+                                <p><strong>Building:</strong> Gedung A</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Status:</strong> 
+                                    <span class="badge" id="device-status-badge">Unknown</span>
+                                </p>
+                                <p><strong>Last Heartbeat:</strong> 
+                                    <span id="last-heartbeat">Never</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sensor Cards -->
+        <div class="row mb-4">
+            <div class="col-xl-3 col-lg-6 col-md-6 mb-3">
+                <div class="card sensor-card" data-sensor="temperature">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title text-muted">Temperature</h6>
+                                <h2 class="mb-0" id="temp-value">--</h2>
+                                <small class="text-muted">°C</small>
+                            </div>
+                            <div class="sensor-icon">
+                                <i class="fas fa-thermometer-half"></i>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <small class="text-muted">Avg: <span id="temp-avg">--</span>°C</small>
+                            <span class="badge float-end" id="temp-status">Unknown</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xl-3 col-lg-6 col-md-6 mb-3">
+                <div class="card sensor-card" data-sensor="humidity">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title text-muted">Humidity</h6>
+                                <h2 class="mb-0" id="humidity-value">--</h2>
+                                <small class="text-muted">%</small>
+                            </div>
+                            <div class="sensor-icon">
+                                <i class="fas fa-tint"></i>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <small class="text-muted">Avg: <span id="humidity-avg">--</span>%</small>
+                            <span class="badge float-end" id="humidity-status">Unknown</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xl-3 col-lg-6 col-md-6 mb-3">
+                <div class="card sensor-card" data-sensor="light">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title text-muted">Light</h6>
+                                <h2 class="mb-0" id="light-value">--</h2>
+                                <small class="text-muted">lumens</small>
+                            </div>
+                            <div class="sensor-icon">
+                                <i class="fas fa-sun"></i>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <small class="text-muted">Avg: <span id="light-avg">--</span> lumens</small>
+                            <span class="badge float-end" id="light-status">Unknown</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xl-3 col-lg-6 col-md-6 mb-3">
+                <div class="card sensor-card" data-sensor="co2">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title text-muted">CO₂</h6>
+                                <h2 class="mb-0" id="co2-value">--</h2>
+                                <small class="text-muted">ppm</small>
+                            </div>
+                            <div class="sensor-icon">
+                                <i class="fas fa-smog"></i>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <small class="text-muted">Avg: <span id="co2-avg">--</span> ppm</small>
+                            <span class="badge float-end" id="co2-status">Unknown</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Charts -->
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="fas fa-chart-line me-2"></i>Sensor Data
+                        </h5>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-outline-primary btn-sm active" data-hours="1">1H</button>
+                            <button type="button" class="btn btn-outline-primary btn-sm" data-hours="6">6H</button>
+                            <button type="button" class="btn btn-outline-primary btn-sm" data-hours="24">24H</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="sensorChart" height="300"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Control Panel -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-cogs me-2"></i>Device Control
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <button class="btn btn-success btn-block" onclick="sendCommand('fan_on')">
+                                    <i class="fas fa-fan me-2"></i>Turn Fan On
+                                </button>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <button class="btn btn-secondary btn-block" onclick="sendCommand('fan_off')">
+                                    <i class="fas fa-fan me-2"></i>Turn Fan Off
+                                </button>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <button class="btn btn-warning btn-block" onclick="sendCommand('calibrate')">
+                                    <i class="fas fa-cog me-2"></i>Calibrate Sensors
+                                </button>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <button class="btn btn-danger btn-block" onclick="sendCommand('reboot')">
+                                    <i class="fas fa-power-off me-2"></i>Reboot Device
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Events and Commands -->
+            <div class="col-lg-4">
+                <!-- Recent Events -->
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="fas fa-exclamation-triangle me-2"></i>Recent Events
+                        </h5>
+                        <button class="btn btn-outline-secondary btn-sm" onclick="refreshEvents()">
+                            <i class="fas fa-refresh"></i>
+                        </button>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="events-list" class="list-group list-group-flush" style="max-height: 400px; overflow-y: auto;">
+                            <div class="list-group-item text-center text-muted">
+                                Loading events...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Command History -->
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="fas fa-history me-2"></i>Command History
+                        </h5>
+                        <button class="btn btn-outline-secondary btn-sm" onclick="refreshCommands()">
+                            <i class="fas fa-refresh"></i>
+                        </button>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="commands-list" class="list-group list-group-flush" style="max-height: 300px; overflow-y: auto;">
+                            <div class="list-group-item text-center text-muted">
+                                Loading commands...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="toast" class="toast" role="alert">
+            <div class="toast-header">
+                <strong class="me-auto">Notification</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body">
+                <!-- Toast message will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="{% static 'monitoring/js/dashboard.js' %}"></script>
+</body>
+</html>
